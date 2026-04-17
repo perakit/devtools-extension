@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Dev Toolbox</title>
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+    <style>
+        body {
+            width: 350px;
+            min-height: 400px;
+            padding: 1rem;
+        }
+        .tool-category {
+            margin-bottom: 1.5rem;
+        }
+        .tool-category h6 {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05rem;
+        }
+        .tool-btn {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="mb-3 d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Dev Toolbox</h5>
+            <span class="badge bg-primary">v1.0</span>
+        </header>
+
+        <div class="tool-category">
+            <h6>Viewing Tools</h6>
+            <button id="btn-responsive-viewer" class="btn btn-outline-secondary btn-sm tool-btn">
+                Responsive Viewer
+            </button>
+        </div>
+
+        <div class="tool-category">
+            <h6>DOM Editing</h6>
+            <button id="btn-css-inspector" class="btn btn-outline-secondary btn-sm tool-btn">CSS Inspector</button>
+            <button id="btn-text-editor" class="btn btn-outline-secondary btn-sm tool-btn">Live Text Editor</button>
+            <button id="btn-font-changer" class="btn btn-outline-secondary btn-sm tool-btn">Fonts Changer</button>
+            <button id="btn-move-element" class="btn btn-outline-secondary btn-sm tool-btn">Move Element</button>
+            <button id="btn-delete-element" class="btn btn-outline-secondary btn-sm tool-btn">Delete Element</button>
+        </div>
+
+        <div class="tool-category">
+            <h6>Analysis</h6>
+            <button id="btn-color-picker" class="btn btn-outline-secondary btn-sm tool-btn">Color Picker</button>
+            <button id="btn-seo-inspector" class="btn btn-outline-secondary btn-sm tool-btn">SEO Inspector</button>
+            <button id="btn-email-finder" class="btn btn-outline-secondary btn-sm tool-btn">Email Finder</button>
+        </div>
+
+        <div class="tool-category">
+            <h6>Utilities</h6>
+            <button id="btn-markdown-export" class="btn btn-outline-secondary btn-sm tool-btn">Webpage to Markdown</button>
+            <button id="btn-todo-tasks" class="btn btn-outline-secondary btn-sm tool-btn">Todo Tasks</button>
+        </div>
+
+        <footer class="mt-4 pt-3 border-top text-center">
+            <a href="options.html" target="_blank" class="text-decoration-none small text-muted">Settings</a>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

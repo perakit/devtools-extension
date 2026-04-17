@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Viewer - Web Dev Toolbox</title>
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        #toolbar {
+            background: #fff;
+            border-bottom: 1px solid #dee2e6;
+            padding: 0.25rem 0.75rem;
+            z-index: 1000;
+            font-size: 12px;
+        }
+        body.dark-mode #toolbar {
+            background: #1e1e1e;
+            border-bottom: 1px solid #333;
+            color: #fff;
+        }
+        body.dark-mode .form-control {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #fff;
+        }
+        body.dark-mode .input-group-text {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #fff;
+        }
+        body.dark-mode .modal-content {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border-color: #333;
+        }
+        body.dark-mode .modal-header, 
+        body.dark-mode .modal-footer {
+            border-color: #333;
+        }
+        body.dark-mode .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        body.dark-mode .card {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+        body.dark-mode .card.bg-light {
+            background-color: #3d3d3d !important;
+        }
+        body.dark-mode .text-muted {
+            color: #bbb !important;
+        }
+        #viewer-container {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        /* Grid Layout */
+        .layout-grid {
+            display: flex !important;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: start;
+            gap: 10px;
+        }
+        /* List Layout */
+        .layout-list {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        .device-wrapper {
+            background: #ddd;
+            border-radius: 12px;
+            padding: 14px 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+            width: auto;
+            margin: 0;
+        }
+        body.dark-mode .device-wrapper {
+            background: #2d2d2d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        /* Device Header Controls */
+        .device-info {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #495057;
+            padding: 0px 10px;
+        }
+        .device-controls {
+            display: flex;
+            gap: 5px;
+        }
+        .device-controls button {
+            padding: 2px 6px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        body.dark-mode .device-info {
+            color: #bbb;
+        }
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+        }
+        iframe {
+            border: none;
+            background: white;
+        }
+        .controls-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="toolbar" class="container-fluid">
+        <div class="row align-items-center g-2 py-2">
+            <div class="col-auto">
+                <strong class="mb-0" style="font-size: 13px;">Responsive Viewer</strong>
+            </div>
+            <div class="col-auto flex-grow-1 mx-2">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text" style="font-size: 11px;">URL</span>
+                    <input type="text" id="url-input" class="form-control" style="font-size: 11px;" placeholder="https://example.com">
+                    <button id="btn-apply-url" class="btn btn-primary" style="font-size: 11px;">Apply</button>
+                </div>
+            </div>
+            <div class="col text-end controls-group justify-content-end">
+                <button id="btn-add-device" class="btn btn-sm btn-outline-primary me-2" style="font-size: 11px;">+ Add Device</button>
+                <div class="btn-group btn-group-sm me-2">
+                    <button id="btn-grid-view" class="btn btn-outline-primary active" style="font-size: 11px;">Grid</button>
+                    <button id="btn-list-view" class="btn btn-outline-primary" style="font-size: 11px;">List</button>
+                </div>
+                <button id="btn-toggle-dark" class="btn btn-sm btn-outline-secondary me-2" style="font-size: 11px;">🌙 Dark Mode</button>
+                <button id="btn-refresh" class="btn btn-sm btn-primary" style="font-size: 11px;">Refresh All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Selection Modal -->
+    <div class="modal fade" id="deviceModal" tabindex="-1" aria-labelledby="deviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deviceModalLabel">Select Device</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="btn-group btn-group-sm" id="device-filters">
+                                <!-- Filters will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3" id="device-library-list" style="max-height: 60vh; overflow-y: auto;">
+                        <!-- Device cards will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="viewer-container" class="layout-grid">
+        <!-- Device previews will be injected here -->
+    </div>
+
+    <script src="vendor/js/bootstrap.bundle.min.js"></script>
+    <script src="responsive-viewer.js"></script>
+</body>
+</html>
