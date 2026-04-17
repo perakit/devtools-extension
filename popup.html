@@ -6,64 +6,295 @@
     <title>Web Dev Toolbox</title>
     <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
     <style>
+        :root {
+            color-scheme: dark;
+            --popup-bg: #11161d;
+            --panel-bg: #18212b;
+            --panel-bg-strong: #101720;
+            --panel-border: #293544;
+            --text-primary: #ecf3fb;
+            --text-muted: #9fb0c3;
+            --accent: #4da3ff;
+            --accent-hover: #74b8ff;
+            --accent-soft: rgba(77, 163, 255, 0.14);
+            --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.35);
+        }
         body {
             width: 350px;
             min-height: 400px;
             padding: 1rem;
+            background: radial-gradient(circle at top, #1b2531 0%, var(--popup-bg) 58%);
+            color: var(--text-primary);
+        }
+        .container-fluid {
+            background:
+                radial-gradient(circle at top right, rgba(77, 163, 255, 0.14), transparent 32%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
+                color-mix(in srgb, var(--panel-bg) 88%, transparent);
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 1rem;
+            box-shadow: var(--shadow-soft);
+        }
+        .popup-header {
+            margin-bottom: 1rem;
+        }
+        .popup-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .popup-subtitle {
+            margin: 0.45rem 0 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
         }
         .tool-category {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            padding-top: 0.2rem;
         }
         .tool-category h6 {
-            border-bottom: 1px solid #dee2e6;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.75rem;
-            color: #6c757d;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.28rem 0.55rem;
+            margin-bottom: 0.85rem;
+            color: var(--text-muted);
             text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05rem;
+            font-size: 0.68rem;
+            letter-spacing: 0.09rem;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .tool-grid {
+            display: grid;
+            gap: 0.55rem;
         }
         .tool-btn {
             width: 100%;
             text-align: left;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0;
+            padding: 0.75rem 0.8rem;
+            border-color: rgba(255, 255, 255, 0.08);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+            color: var(--text-primary);
+            border-radius: 14px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            transition: transform 120ms ease, border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+        }
+        .tool-btn:hover,
+        .tool-btn:focus {
+            border-color: var(--accent);
+            background: linear-gradient(180deg, rgba(77, 163, 255, 0.18), rgba(77, 163, 255, 0.08));
+            color: var(--text-primary);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+            transform: translateY(-1px);
+        }
+        .tool-btn:active {
+            background: rgba(77, 163, 255, 0.2) !important;
+            border-color: var(--accent-hover) !important;
+            color: var(--text-primary) !important;
+        }
+        .tool-btn-inner {
+            display: grid;
+            grid-template-columns: 36px 1fr auto;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .tool-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            font-size: 1rem;
+            background: var(--accent-soft);
+            color: #badaff;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        }
+        .tool-copy {
+            min-width: 0;
+        }
+        .tool-name {
+            display: block;
+            font-size: 0.87rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .tool-description {
+            display: block;
+            margin-top: 0.15rem;
+            font-size: 0.72rem;
+            line-height: 1.35;
+            color: var(--text-muted);
+            white-space: normal;
+        }
+        .tool-arrow {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .badge.bg-primary {
+            background: linear-gradient(135deg, var(--accent), #2f7dd1) !important;
+            border-radius: 999px;
+            padding: 0.42rem 0.55rem;
+        }
+        .border-top {
+            border-color: var(--panel-border) !important;
+        }
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+        footer {
+            color: var(--text-muted);
+        }
+        .text-decoration-none.small.text-muted:hover {
+            color: var(--accent-hover) !important;
         }
     </style>
 </head>
 <body>
     <div class="container-fluid">
-        <header class="mb-3 d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">Dev Toolbox</h5>
-            <span class="badge bg-primary">v1.0</span>
+        <header class="popup-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <h5 class="mb-0 popup-title">Dev Toolbox</h5>
+                <span class="badge bg-primary">v1.0</span>
+            </div>
+            <p class="popup-subtitle">Launch editing, inspection, and export tools from a cleaner command-panel style layout.</p>
         </header>
 
         <div class="tool-category">
             <h6>Viewing Tools</h6>
-            <button id="btn-responsive-viewer" class="btn btn-outline-secondary btn-sm tool-btn">
-                Responsive Viewer
-            </button>
+            <div class="tool-grid">
+                <button id="btn-responsive-viewer" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">◫</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Responsive Viewer</span>
+                            <span class="tool-description">Preview the current page across multiple device sizes.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+            </div>
         </div>
 
         <div class="tool-category">
             <h6>DOM Editing</h6>
-            <button id="btn-css-inspector" class="btn btn-outline-secondary btn-sm tool-btn">CSS Inspector</button>
-            <button id="btn-text-editor" class="btn btn-outline-secondary btn-sm tool-btn">Live Text Editor</button>
-            <button id="btn-font-changer" class="btn btn-outline-secondary btn-sm tool-btn">Fonts Changer</button>
-            <button id="btn-move-element" class="btn btn-outline-secondary btn-sm tool-btn">Move Element</button>
-            <button id="btn-delete-element" class="btn btn-outline-secondary btn-sm tool-btn">Delete Element</button>
+            <div class="tool-grid">
+                <button id="btn-css-inspector" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">⌘</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">CSS Inspector</span>
+                            <span class="tool-description">Inspect computed styles and lock onto elements.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-text-editor" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">T</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Live Text Editor</span>
+                            <span class="tool-description">Toggle on-page text editing for quick content changes.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-font-changer" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">Aa</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Fonts Changer</span>
+                            <span class="tool-description">Apply a new font family and size to any element.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-move-element" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">↕</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Move Element</span>
+                            <span class="tool-description">Reorder DOM nodes directly on the live page.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-delete-element" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">×</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Delete Element</span>
+                            <span class="tool-description">Hide or remove unwanted blocks from the layout.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+            </div>
         </div>
 
         <div class="tool-category">
             <h6>Analysis</h6>
-            <button id="btn-color-picker" class="btn btn-outline-secondary btn-sm tool-btn">Color Picker</button>
-            <button id="btn-seo-inspector" class="btn btn-outline-secondary btn-sm tool-btn">SEO Inspector</button>
-            <button id="btn-email-finder" class="btn btn-outline-secondary btn-sm tool-btn">Email Finder</button>
+            <div class="tool-grid">
+                <button id="btn-color-picker" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">◌</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Color Picker</span>
+                            <span class="tool-description">Sample page colors and inspect visual accents.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-seo-inspector" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">#</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">SEO Inspector</span>
+                            <span class="tool-description">Review titles, metadata, and search-facing signals.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-email-finder" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">@</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Email Finder</span>
+                            <span class="tool-description">Scan the page for visible email addresses fast.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+            </div>
         </div>
 
         <div class="tool-category">
             <h6>Utilities</h6>
-            <button id="btn-markdown-export" class="btn btn-outline-secondary btn-sm tool-btn">Webpage to Markdown</button>
-            <button id="btn-todo-tasks" class="btn btn-outline-secondary btn-sm tool-btn">Todo Tasks</button>
+            <div class="tool-grid">
+                <button id="btn-markdown-export" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">M</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Webpage to Markdown</span>
+                            <span class="tool-description">Convert page content into portable Markdown output.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+                <button id="btn-todo-tasks" class="btn btn-outline-secondary btn-sm tool-btn">
+                    <span class="tool-btn-inner">
+                        <span class="tool-icon">+</span>
+                        <span class="tool-copy">
+                            <span class="tool-name">Todo Tasks</span>
+                            <span class="tool-description">Track quick notes and follow-up items for review.</span>
+                        </span>
+                        <span class="tool-arrow">›</span>
+                    </span>
+                </button>
+            </div>
         </div>
 
         <footer class="mt-4 pt-3 border-top text-center">

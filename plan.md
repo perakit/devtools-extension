@@ -44,12 +44,12 @@ Use this file as the working checklist for the project.
 - [x] Test Responsive Viewer on real websites
 
 ## 3. Core DOM editing tools
-- [ ] Implement CSS Inspector
-- [ ] Implement Live Text Editor
-- [ ] Implement Move Element tool
-- [ ] Implement Delete Element / hide element tool
-- [ ] Implement Fonts Changer
-- [ ] Test DOM editing tools on multiple websites
+- [x] Implement CSS Inspector
+- [x] Implement Live Text Editor
+- [x] Implement Move Element tool
+- [x] Implement Delete Element / hide element tool
+- [x] Implement Fonts Changer
+- [x] Test DOM editing tools on multiple websites
 
 ## 4. Page analysis tools
 - [ ] Implement List All Fonts
