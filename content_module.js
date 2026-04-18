@@ -7,6 +7,7 @@ import fontTools from './tools/font-tools.js';
 import colorTools from './tools/color-tools.js';
 import seoTools from './tools/seo-tools.js';
 import utilityTools from './tools/utility-tools.js';
+import browserTools from './tools/browser-tools.js';
 
 // Listen for tool launch events from the popup
 window.addEventListener('toolbox-tool-launch', (event) => {
@@ -56,6 +57,51 @@ window.addEventListener('toolbox-tool-launch', (event) => {
             break;
         case 'extract-images':
             utilityTools.toggle('images');
+            break;
+        case 'export-element':
+            browserTools.toggle('export-element');
+            break;
+        case 'page-ruler':
+            browserTools.toggle('page-ruler');
+            break;
+        case 'page-outliner':
+            browserTools.toggle('page-outliner');
+            break;
+        case 'image-replacer':
+            browserTools.toggle('image-replacer');
+            break;
+        case 'open-multiple-urls':
+            browserTools.toggle('open-multiple-urls');
+            break;
+        case 'table-capture':
+            browserTools.toggle('table-capture');
+            break;
+        case 'cookie-editor':
+            browserTools.toggle('cookie-editor');
+            break;
+        case 'api-tester':
+            browserTools.toggle('api-tester');
+            break;
+        case 'currency-converter':
+            browserTools.toggle('currency-converter');
+            break;
+        case 'accessibility-tools':
+            browserTools.toggle('accessibility-tools');
+            break;
+        case 'site-stack':
+            browserTools.toggle('site-stack');
+            break;
+        case 'broken-links':
+            browserTools.toggle('broken-links');
+            break;
+        case 'redirect-path':
+            browserTools.toggle('redirect-path');
+            break;
+        case 'pagespeed-insights':
+            browserTools.toggle('pagespeed-insights');
+            break;
+        case 'stripe-analytics':
+            browserTools.toggle('stripe-analytics');
             break;
         default:
             console.warn(`Tool ${toolName} is not yet implemented.`);

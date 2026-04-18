@@ -68,26 +68,26 @@ Use this file as the working checklist for the project.
 - [x] Test export and utility tools
 
 ## 6. Phase 2 browser utilities
-- [ ] Implement Export Element
-- [ ] Implement Page Ruler
-- [ ] Implement Page Outliner
-- [ ] Implement Image Replacer
-- [ ] Implement Take Screenshot
-- [ ] Implement Open Multiple URLs
-- [ ] Implement Table Capture
-- [ ] Implement Save as PDF
-- [ ] Implement Cookie Editor
-- [ ] Implement API Tester
-- [ ] Implement Currency Converter
+- [x] Implement Export Element
+- [x] Implement Page Ruler
+- [x] Implement Page Outliner
+- [x] Implement Image Replacer
+- [x] Implement Take Screenshot
+- [x] Implement Open Multiple URLs
+- [x] Implement Table Capture
+- [x] Implement Save as PDF
+- [x] Implement Cookie Editor
+- [x] Implement API Tester
+- [x] Implement Currency Converter
 
 ## 7. Advanced features
-- [ ] Implement basic Accessibility Tools
-- [ ] Implement Site Stack detection
-- [ ] Implement Broken Link Checker
-- [ ] Implement Redirect Path logging
-- [ ] Integrate Page Speed Insights API
-- [ ] Design optional Stripe Analytics module
-- [ ] Add Responsive Viewer enhancements
+- [x] Implement basic Accessibility Tools
+- [x] Implement Site Stack detection
+- [x] Implement Broken Link Checker
+- [x] Implement Redirect Path logging
+- [x] Integrate Page Speed Insights API
+- [x] Design optional Stripe Analytics module
+- [x] Add Responsive Viewer enhancements
 
 ## 8. Polish and release
 - [ ] Add empty states and error handling
