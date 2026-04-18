@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Tasks</title>
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0f1720;
+            --panel: #15212d;
+            --panel-soft: #1b2a38;
+            --border: #294055;
+            --text: #ebf3fb;
+            --muted: #9cb2c6;
+            --accent: #4da3ff;
+            --success: #1fb66d;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #101923, var(--bg));
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+        .todo-shell {
+            padding: 14px;
+        }
+        .todo-card {
+            background: rgba(21, 33, 45, 0.96);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.25);
+        }
+        .todo-header h1 {
+            font-size: 1.05rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        .todo-header p {
+            margin: 0.3rem 0 0;
+            color: var(--muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+        .todo-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .todo-pill {
+            background: var(--panel-soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+        }
+        .todo-pill strong {
+            display: block;
+            font-size: 0.95rem;
+        }
+        .todo-pill span {
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+        .todo-form textarea {
+            min-height: 88px;
+            background: #0d141c;
+            color: var(--text);
+            border-color: var(--border);
+        }
+        .todo-form textarea:focus {
+            background: #0d141c;
+            color: var(--text);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.2rem rgba(77, 163, 255, 0.15);
+        }
+        .todo-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .todo-list {
+            display: grid;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .todo-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+            align-items: start;
+            padding: 10px;
+            border-radius: 12px;
+            background: #101923;
+            border: 1px solid var(--border);
+        }
+        .todo-item.is-complete {
+            opacity: 0.78;
+        }
+        .todo-item.is-complete .todo-item-text {
+            text-decoration: line-through;
+            color: var(--muted);
+        }
+        .todo-item-text {
+            white-space: pre-wrap;
+            line-height: 1.45;
+            font-size: 0.88rem;
+        }
+        .todo-item-meta {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+        .todo-timer-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .todo-timer-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px 4px 4px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border: 1px solid var(--border);
+            background: var(--panel-soft);
+            color: var(--text);
+        }
+        .todo-timer-pill.is-paused {
+            color: #dbeafe;
+            background: rgba(77, 163, 255, 0.08);
+            border-color: rgba(77, 163, 255, 0.2);
+        }
+        .todo-timer-pill.is-running {
+            border-color: rgba(77, 163, 255, 0.45);
+            color: #cfe7ff;
+            background: rgba(77, 163, 255, 0.16);
+        }
+        .todo-timer-toggle {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 999px;
+            display: inline-grid;
+            place-items: center;
+            background: rgba(15, 23, 42, 0.35);
+            color: #eff7ff;
+            cursor: pointer;
+            font-size: 0.75rem;
+            line-height: 1;
+            padding: 0;
+        }
+        .todo-timer-toggle:hover {
+            background: rgba(15, 23, 42, 0.55);
+        }
+        .todo-empty {
+            padding: 16px;
+            text-align: center;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            color: var(--muted);
+            background: #0f1821;
+        }
+        .btn-outline-light {
+            border-color: var(--border);
+            color: var(--text);
+        }
+        .btn-outline-light:hover {
+            background: rgba(77, 163, 255, 0.12);
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        .todo-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.72);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 9999;
+        }
+        .todo-modal-backdrop.is-open {
+            display: flex;
+        }
+        .todo-modal {
+            width: min(360px, 100%);
+            background: #13202c;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        }
+        .todo-modal h2 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+        }
+        .todo-modal p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+        .todo-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="delete-modal" class="todo-modal-backdrop" aria-hidden="true">
+        <div class="todo-modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+            <h2 id="delete-modal-title">Delete task?</h2>
+            <p id="delete-modal-message">This action will remove the task and its tracked time.</p>
+            <div class="todo-modal-actions">
+                <button id="cancel-delete" class="btn btn-outline-light btn-sm">Cancel</button>
+                <button id="confirm-delete" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="todo-shell">
+        <div class="todo-card">
+            <div class="todo-header">
+                <h1>Todo Tasks</h1>
+                <p>Persistent notes for the current extension, stored locally in Chrome.</p>
+            </div>
+
+            <div class="todo-summary">
+                <div class="todo-pill">
+                    <strong id="summary-total">0</strong>
+                    <span>Total</span>
+                </div>
+                <div class="todo-pill">
+                    <strong id="summary-open">0</strong>
+                    <span>Open</span>
+                </div>
+                <div class="todo-pill">
+                    <strong id="summary-done">0</strong>
+                    <span>Done</span>
+                </div>
+            </div>
+
+            <div class="todo-form">
+                <label for="task-input" class="form-label small text-secondary-emphasis">New task</label>
+                <textarea id="task-input" class="form-control" placeholder="Add a quick task, bug note, or follow-up item..."></textarea>
+                <div class="todo-actions">
+                    <button id="add-task" class="btn btn-primary btn-sm">Add task</button>
+                    <button id="add-current-page" class="btn btn-outline-light btn-sm">Add current page</button>
+                    <button id="clear-completed" class="btn btn-outline-light btn-sm">Clear completed</button>
+                </div>
+            </div>
+
+            <div id="todo-list" class="todo-list"></div>
+        </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>

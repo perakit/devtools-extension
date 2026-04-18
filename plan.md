@@ -61,11 +61,11 @@ Use this file as the working checklist for the project.
 - [x] Test analysis tools on real pages
 
 ## 5. Content utility tools
-- [ ] Implement Reader Mode
-- [ ] Implement Webpage to Markdown
-- [ ] Implement Extract Images
-- [ ] Implement Todo Tasks with local storage
-- [ ] Test export and utility tools
+- [x] Implement Reader Mode
+- [x] Implement Webpage to Markdown
+- [x] Implement Extract Images
+- [x] Implement Todo Tasks with local storage
+- [x] Test export and utility tools
 
 ## 6. Phase 2 browser utilities
 - [ ] Implement Export Element

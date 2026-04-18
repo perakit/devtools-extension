@@ -12,7 +12,8 @@
     "cookies",
     "browsingData",
     "contextMenus",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "sidePanel"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -20,6 +21,9 @@
   "action": {
     "default_popup": "popup.html",
     "default_title": "Web Dev Toolbox"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
   },
   "background": {
     "service_worker": "background.js"

@@ -6,6 +6,7 @@ import domTools from './tools/dom-tools.js';
 import fontTools from './tools/font-tools.js';
 import colorTools from './tools/color-tools.js';
 import seoTools from './tools/seo-tools.js';
+import utilityTools from './tools/utility-tools.js';
 
 // Listen for tool launch events from the popup
 window.addEventListener('toolbox-tool-launch', (event) => {
@@ -47,8 +48,14 @@ window.addEventListener('toolbox-tool-launch', (event) => {
         case 'email-finder':
             seoTools.toggle('email');
             break;
+        case 'reader-mode':
+            utilityTools.toggle('reader');
+            break;
         case 'markdown-export':
-            alert('Markdown Export coming soon!');
+            utilityTools.toggle('markdown');
+            break;
+        case 'extract-images':
+            utilityTools.toggle('images');
             break;
         default:
             console.warn(`Tool ${toolName} is not yet implemented.`);
